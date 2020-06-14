@@ -3,6 +3,9 @@ using Toybox.Graphics;
 using Toybox.System;
 using Toybox.Lang;
 using Toybox.Application;
+using Toybox.ActivityMonitor;
+using Toybox.Time;
+using Toybox.Time.Gregorian;
 
 class orioleView extends WatchUi.WatchFace {
 
@@ -39,10 +42,27 @@ class orioleView extends WatchUi.WatchFace {
         }
         var timeString = Lang.format(timeFormat, [hours, clockTime.min.format("%02d")]);
 
-        // Update the view
-        var view = View.findDrawableById("TimeLabel");
-        view.setColor(Application.getApp().getProperty("ForegroundColor"));
-        view.setText(timeString);
+        // Update the time
+        var timeLabel = View.findDrawableById("Time");
+        timeLabel.setColor(Application.getApp().getProperty("ForegroundColor"));
+        timeLabel.setText(timeString);
+
+		// format the date
+		var dayInfo = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
+		var dateString = Lang.format("$1$ $2$", [dayInfo.day_of_week, dayInfo.day]);
+
+		// Update the bottom detail (date for now)
+		var bottomDetailLabel = View.findDrawableById("BottomDetail");
+		bottomDetailLabel.setText(dateString);
+		
+		// Update the left bar (steps for now)
+		var info = ActivityMonitor.getInfo();
+		var leftBar = View.findDrawableById("LeftBar");
+		leftBar.setTotalAndCompleted(info.stepGoal, info.steps);
+		
+		// Update the right bar (floors climbed for now)
+		var rightBar = View.findDrawableById("RightBar");
+		rightBar.setTotalAndCompleted(info.floorsClimbedGoal, info.floorsClimbed);
 
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);

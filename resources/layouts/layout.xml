@@ -1,4 +1,12 @@
 <layout id="WatchFace">
     <drawable class="Background" />
-    <label id="TimeLabel" x="center" y="center" font="Graphics.FONT_LARGE" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_BLUE" />
+    <label id="TopDetail" x="center" y="25%" font="Graphics.FONT_TINY" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
+    <label id="Time" x="center" y="center" font="Graphics.FONT_NUMBER_THAI_HOT" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
+    <label id="BottomDetail" x="center" y="75%" font="Graphics.FONT_TINY" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
+    <drawable id="LeftBar" class="arcBar">
+    	<param name="location">0</param>
+    </drawable>
+    <drawable id="RightBar" class="arcBar">
+    	<param name="location">1</param>
+    </drawable>
 </layout>
