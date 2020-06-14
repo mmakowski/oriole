@@ -44,8 +44,10 @@ class arcBar extends Ui.Drawable {
 			completedLengthDeg = BAR_LENGTH_DEG * completed/total;
 			completedColor = Graphics.COLOR_YELLOW; // Graphics.COLOR_LT_GRAY
 		}
-		dc.setColor(completedColor, Graphics.COLOR_BLACK);
-		dc.drawArc(width/2, height/2, radius, barDir, barStart, barStart + (dirSign * completedLengthDeg));
+		if (completedLengthDeg > 0) {
+			dc.setColor(completedColor, Graphics.COLOR_BLACK);
+			dc.drawArc(width/2, height/2, radius, barDir, barStart, barStart + (dirSign * completedLengthDeg));
+		}
 	}
 	
 	function setTotalAndCompleted(newTotal, newCompleted) {
