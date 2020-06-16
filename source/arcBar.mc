@@ -3,11 +3,11 @@ using Toybox.WatchUi as Ui;
 using Toybox.Graphics;
 
 class arcBar extends Ui.Drawable {
-	hidden const STYLE_GUTTER = 0;
-	hidden const STYLE_LIMITS = 1;
-	hidden const STYLE_BARE = 2;
+	hidden const STYLE_FULL = 0;
+	hidden const STYLE_SKELETON = 1;
 	hidden const BAR_LENGTH_DEG = 90;
-	hidden const LIMITS_LENGTH_DEG = 3;
+	hidden const SKELETON_WIDTH = 1;
+	hidden const SKELETON_DEG = 1;
 
 	hidden var location;
 	hidden var total = 100;
@@ -37,15 +37,24 @@ class arcBar extends Ui.Drawable {
 		}  
 		var barEnd = barStart + (dirSign * BAR_LENGTH_DEG);
 		
-		dc.setPenWidth(width);
-
-		if (style == STYLE_GUTTER && completed < total) {
-			// draw gutter background
+		if (completed < total) {
+			// draw background
 			var bgColor = app.getProperty("BarBackgroundColor");
 			dc.setColor(bgColor, Graphics.COLOR_BLACK);
-			dc.drawArc(centreX, centreY, radius, barDir, barStart, barEnd);
+			if (style == STYLE_SKELETON) {
+				dc.setPenWidth(SKELETON_WIDTH);
+				dc.drawArc(centreX, centreY, radius - width/2, barDir, barStart, barEnd);
+				dc.setPenWidth(width);
+				dc.drawArc(centreX, centreY, radius, barDir, barStart, barStart + (dirSign * SKELETON_DEG));
+				dc.drawArc(centreX, centreY, radius, barDir, barEnd - (dirSign * SKELETON_DEG), barEnd);
+			} else {
+				dc.setPenWidth(width);
+				dc.drawArc(centreX, centreY, radius, barDir, barStart, barEnd);
+			}
 		}
 		
+		dc.setPenWidth(width);
+
 		if (completed >= total) {
 			// draw complete bar
 			var fgColor = app.getProperty("BarForegroundColorComplete");
@@ -59,14 +68,6 @@ class arcBar extends Ui.Drawable {
 				dc.setColor(fgColor, Graphics.COLOR_BLACK);
 				dc.drawArc(centreX, centreY, radius, barDir, barStart, barStart + (dirSign * completedLengthDeg));
 			}
-		}
-		
-		if (style == STYLE_LIMITS) {
-			// draw limits
-			var bgColor = app.getProperty("BarBackgroundColor");
-			dc.setColor(bgColor, Graphics.COLOR_BLACK);
-			dc.drawArc(centreX, centreY, radius, barDir, barStart, barStart + (dirSign * LIMITS_LENGTH_DEG));
-			dc.drawArc(centreX, centreY, radius, barDir, barEnd - (dirSign * LIMITS_LENGTH_DEG), barEnd);
 		}
 	}
 	

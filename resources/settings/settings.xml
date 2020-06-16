@@ -39,17 +39,16 @@
 
 	<setting propertyKey="@Properties.BarWidth" title="@Strings.BarWidthTitle">
 		<settingConfig type="list">
-			<listEntry value="5">@Strings.WidthThin</listEntry>
-			<listEntry value="10">@Strings.WidthMedium</listEntry>
-			<listEntry value="15">@Strings.WidthThick</listEntry>
+			<listEntry value="4">@Strings.WidthThin</listEntry>
+			<listEntry value="8">@Strings.WidthMedium</listEntry>
+			<listEntry value="12">@Strings.WidthThick</listEntry>
 		</settingConfig>
 	</setting>
 	
     <setting propertyKey="@Properties.BarStyle" title="@Strings.BarStyleTitle">
         <settingConfig type="list">
-        	<listEntry value="0">@Strings.BarStyleGutter</listEntry>
-        	<listEntry value="1">@Strings.BarStyleLimits</listEntry>
-        	<listEntry value="2">@Strings.BarStyleBare</listEntry>
+        	<listEntry value="0">@Strings.BarStyleFull</listEntry>
+        	<listEntry value="1">@Strings.BarStyleSkeleton</listEntry>
        	</settingConfig>
     </setting>
 

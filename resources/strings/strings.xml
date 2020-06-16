@@ -24,7 +24,6 @@
 	<string id="WidthMedium">Medium</string>
 	<string id="WidthThick">Thick</string>
 	
-	<string id="BarStyleGutter">Gutter</string>
-	<string id="BarStyleLimits">Limits</string>
-	<string id="BarStyleBare">Bare</string>
+	<string id="BarStyleFull">Full</string>
+	<string id="BarStyleSkeleton">Skeleton</string>
 </strings>
