@@ -34,11 +34,6 @@ class orioleView extends WatchUi.WatchFace {
             if (hours > 12) {
                 hours = hours - 12;
             }
-        } else {
-            if (Application.getApp().getProperty("UseMilitaryFormat")) {
-                timeFormat = "$1$$2$";
-                hours = hours.format("%02d");
-            }
         }
         var timeString = Lang.format(timeFormat, [hours, clockTime.min.format("%02d")]);
 

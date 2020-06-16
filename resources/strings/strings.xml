@@ -2,15 +2,29 @@
 
     <string id="AppName">Oriole</string>
 
-    <string id="BackgroundColorTitle">Background Color</string>
-    <string id="ForegroundColorTitle">Foreground Color</string>
-    <string id="MilitaryFormatTitle">Military Format for 24 Hour Time</string>
-
+	<string id="ForegroundColorTitle">Time font color</string>
+    <string id="BarBackgroundColorTitle">Bar background color</string>
+    <string id="BarForegroundColorIncompleteTitle">Bar foreground color - incomplete</string>
+    <string id="BarForegroundColorCompleteTitle">Bar foreground color - complete</string>
+    <string id="BarWidthTitle">Bar width</string>
+    <string id="BarStyleTitle">Bar style</string>
+    
     <string id="ColorBlack">Black</string>
-    <string id="ColorDarkGray">Dark Gray</string>
-    <string id="ColorLightGray">Light Gray</string>
+    <string id="ColorDarkGray">Dark gray</string>
+    <string id="ColorLightGray">Light gray</string>
     <string id="ColorWhite">White</string>
     <string id="ColorBlue">Blue</string>
     <string id="ColorRed">Red</string>
+    <string id="ColorGreen">Green</string>
+    <string id="ColorDarkGreen">Dark Green</string>
+    <string id="ColorOrange">Orange</string>
+    <string id="ColorYellow">Yellow</string>
 
+	<string id="WidthThin">Thin</string>
+	<string id="WidthMedium">Medium</string>
+	<string id="WidthThick">Thick</string>
+	
+	<string id="BarStyleGutter">Gutter</string>
+	<string id="BarStyleLimits">Limits</string>
+	<string id="BarStyleBare">Bare</string>
 </strings>

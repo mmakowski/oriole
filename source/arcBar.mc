@@ -1,13 +1,17 @@
+using Toybox.Application;
 using Toybox.WatchUi as Ui;
 using Toybox.Graphics;
 
 class arcBar extends Ui.Drawable {
-	const BAR_WIDTH = 5;
-	const BAR_LENGTH_DEG = 90;
+	hidden const STYLE_GUTTER = 0;
+	hidden const STYLE_LIMITS = 1;
+	hidden const STYLE_BARE = 2;
+	hidden const BAR_LENGTH_DEG = 90;
+	hidden const LIMITS_LENGTH_DEG = 3;
 
 	hidden var location;
 	hidden var total = 100;
-	hidden var completed = 45;
+	hidden var completed = 0;
 	
 	function initialize(params) {
 		Drawable.initialize(params);
@@ -15,15 +19,13 @@ class arcBar extends Ui.Drawable {
 	}
 	
 	function draw(dc) {
-		dc.setPenWidth(BAR_WIDTH);
-		var width = dc.getWidth();
-		var height = dc.getHeight();
-		var radius = 0;
-		if (width < height) {
-			radius = width/2 - BAR_WIDTH;
-		} else {
-			radius = height/2 - BAR_WIDTH;
-		}
+		var app = Application.getApp();
+		var style = app.getProperty("BarStyle");
+		var width = app.getProperty("BarWidth");
+		var centreX = dc.getWidth()/2;
+		var centreY = dc.getHeight()/2;
+		var radius = calcRadius(dc, width);
+
 		// default for left bar:
 		var barStart = 180 + BAR_LENGTH_DEG/2;
 		var barDir = Graphics.ARC_CLOCKWISE;
@@ -33,25 +35,55 @@ class arcBar extends Ui.Drawable {
 			barDir = Graphics.ARC_COUNTER_CLOCKWISE;
 			dirSign = 1;
 		}  
-		// draw bar background
-		dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
-		dc.drawArc(width/2, height/2, radius, barDir, barStart, barStart + (dirSign * BAR_LENGTH_DEG));
+		var barEnd = barStart + (dirSign * BAR_LENGTH_DEG);
+		
+		dc.setPenWidth(width);
 
-		// draw bar foreground
-		var completedLengthDeg = BAR_LENGTH_DEG;
-		var completedColor = Graphics.COLOR_DK_GREEN;
-		if (completed < total) {
-			completedLengthDeg = BAR_LENGTH_DEG * completed/total;
-			completedColor = Graphics.COLOR_YELLOW; // Graphics.COLOR_LT_GRAY
+		if (style == STYLE_GUTTER && completed < total) {
+			// draw gutter background
+			var bgColor = app.getProperty("BarBackgroundColor");
+			dc.setColor(bgColor, Graphics.COLOR_BLACK);
+			dc.drawArc(centreX, centreY, radius, barDir, barStart, barEnd);
 		}
-		if (completedLengthDeg > 0) {
-			dc.setColor(completedColor, Graphics.COLOR_BLACK);
-			dc.drawArc(width/2, height/2, radius, barDir, barStart, barStart + (dirSign * completedLengthDeg));
+		
+		if (completed >= total) {
+			// draw complete bar
+			var fgColor = app.getProperty("BarForegroundColorComplete");
+			dc.setColor(fgColor, Graphics.COLOR_BLACK);
+			dc.drawArc(centreX, centreY, radius, barDir, barStart, barEnd);
+		} else {
+			// draw incomplete bar
+			var completedLengthDeg = BAR_LENGTH_DEG * completed/total;
+			if (completedLengthDeg > 0) {
+				var fgColor = app.getProperty("BarForegroundColorIncomplete");
+				dc.setColor(fgColor, Graphics.COLOR_BLACK);
+				dc.drawArc(centreX, centreY, radius, barDir, barStart, barStart + (dirSign * completedLengthDeg));
+			}
+		}
+		
+		if (style == STYLE_LIMITS) {
+			// draw limits
+			var bgColor = app.getProperty("BarBackgroundColor");
+			dc.setColor(bgColor, Graphics.COLOR_BLACK);
+			dc.drawArc(centreX, centreY, radius, barDir, barStart, barStart + (dirSign * LIMITS_LENGTH_DEG));
+			dc.drawArc(centreX, centreY, radius, barDir, barEnd - (dirSign * LIMITS_LENGTH_DEG), barEnd);
 		}
 	}
 	
 	function setTotalAndCompleted(newTotal, newCompleted) {
 		total = newTotal;
 		completed = newCompleted;
+	}
+	
+	hidden function calcRadius(dc, barWidth) {
+		var radius = 0;
+		var width = dc.getWidth();
+		var height = dc.getHeight();		
+		if (width < height) {
+			radius = width/2 - barWidth;
+		} else {
+			radius = height/2 - barWidth;
+		}
+		return radius;
 	}
 }
