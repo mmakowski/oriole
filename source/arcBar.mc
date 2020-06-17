@@ -8,6 +8,7 @@ class arcBar extends Ui.Drawable {
 	hidden const BAR_LENGTH_DEG = 90;
 	hidden const SKELETON_WIDTH = 1;
 	hidden const SKELETON_DEG = 1;
+	hidden const GOAL_MARKER_DEG = 2;
 
 	hidden var location;
 	hidden var total = 100;
@@ -60,6 +61,13 @@ class arcBar extends Ui.Drawable {
 			var fgColor = app.getProperty("BarForegroundColorComplete");
 			dc.setColor(fgColor, Graphics.COLOR_BLACK);
 			dc.drawArc(centreX, centreY, radius, barDir, barStart, barEnd);
+			if (completed > total) {
+				// draw goal marker
+				var markerPosDeg = BAR_LENGTH_DEG * total/completed;
+				var markerColor = app.getProperty("BarGoalMarkerColor");
+				dc.setColor(markerColor, Graphics.COLOR_BLACK);				
+				dc.drawArc(centreX, centreY, radius, barDir, barStart + (dirSign * (markerPosDeg - GOAL_MARKER_DEG)), barStart + (dirSign * markerPosDeg));
+			}
 		} else {
 			// draw incomplete bar
 			var completedLengthDeg = BAR_LENGTH_DEG * completed/total;

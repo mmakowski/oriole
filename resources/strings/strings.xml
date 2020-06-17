@@ -6,6 +6,7 @@
     <string id="BarBackgroundColorTitle">Bar background color</string>
     <string id="BarForegroundColorIncompleteTitle">Bar foreground color - incomplete</string>
     <string id="BarForegroundColorCompleteTitle">Bar foreground color - complete</string>
+    <string id="BarGoalMarkerColorTitle">Bar goal marker color</string>
     <string id="BarWidthTitle">Bar width</string>
     <string id="BarStyleTitle">Bar style</string>
     

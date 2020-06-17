@@ -3,6 +3,7 @@
 	<property id="BarBackgroundColor" type="number">0x555555</property>
     <property id="BarForegroundColorIncomplete" type="number">0xFFAA00</property>
     <property id="BarForegroundColorComplete" type="number">0x00AA00</property>
+    <property id="BarGoalMarkerColor" type="number">0xFFAA00</property>
     <property id="BarWidth" type="number">8</property>
     <property id="BarStyle" type="number">1</property>
 </properties>
